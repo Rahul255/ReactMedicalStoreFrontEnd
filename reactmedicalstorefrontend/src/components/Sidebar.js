@@ -1,4 +1,5 @@
 import React from 'react';
+import usericon from 'adminbsb-materialdesign//images/user.png';
 
 class Sidebar extends React.Component {
     render () {
@@ -7,7 +8,7 @@ class Sidebar extends React.Component {
                 <aside id="leftsidebar" className="sidebar">
                     <div className="user-info">
                         <div className="image">
-                            <img src="images/user.png" width="48" height="48" alt="User"/>
+                            <img src={usericon} width="48" height="48" alt="User"/>
                         </div>
                         <div className="info-container">
                             <div className="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
@@ -15,11 +16,6 @@ class Sidebar extends React.Component {
                             <div className="btn-group user-helper-dropdown open">
                                 <i className="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                                 <ul className="dropdown-menu pull-right">
-                                    <li><a href="javascript:void(0);" className=" waves-effect waves-block"><i className="material-icons">person</i>Profile</a></li>
-                                    <li role="separator" className="divider"></li>
-                                    
-                                    
-                                    
                                     <li role="separator" className="divider"></li>
                                     <li><a href="javascript:void(0);" className=" waves-effect waves-block"><i className="material-icons">input</i>Sign Out</a></li>
                                 </ul>
