@@ -11,6 +11,7 @@ class MainComponent extends React.Component {
     state = {
         bodyClass:"theme-red ls-closed",
         displayOverlay:"none",
+        width: window.screen.width,
     }
     onBarClick = () => {
         if(this.state.bodyClass == "theme-red ls-closed overlay-open") {
@@ -23,8 +24,18 @@ class MainComponent extends React.Component {
         }
         
     }
+    onscreenresize = () => {
+        console.log(window.screen.width);
+        this.setState({width: window.screen.width})
+    }
+    componentWillMount(){
+        window.addEventListener("resize",this.onscreenresize)
+    }
+    componentWillUnmount(){
+        window.removeEventListener("resize",this.onscreenresize)
+    }
     render() {
-        if (window.screen.width > 1150){
+        if (this.state.width > 1150){
             document.getElementById("root").className = "theme-red";
         }
         else {
