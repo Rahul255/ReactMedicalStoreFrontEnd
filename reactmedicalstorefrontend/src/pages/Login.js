@@ -1,10 +1,14 @@
-import React from 'react'
-import GoogleFontLoader from 'react-google-font-loader'
-import 'adminbsb-materialdesign/plugins/bootstrap/css/bootstrap.css'
-import 'adminbsb-materialdesign/plugins/node-waves/waves.css'
-import 'adminbsb-materialdesign/plugins/animate-css/animate.css'
-import 'adminbsb-materialdesign/css/style.css'
-import AuthHandler from '../utlis/AuthHandler'
+import React from "react";
+import GoogleFontLoader from "react-google-font-loader";
+import "adminbsb-materialdesign/plugins/bootstrap/css/bootstrap.css";
+import "adminbsb-materialdesign/plugins/node-waves/waves.css";
+import "adminbsb-materialdesign/plugins/animate-css/animate.css";
+import "adminbsb-materialdesign/css/style.css";
+import AuthHandler from "../utils/AuthHandler";
+import { reactLocalStorage } from "reactjs-localstorage";
+import { Redirect } from "react-router-dom";
+import Config from "../utils/Config";
+
 
 class Login extends React.Component {
 
@@ -40,6 +44,7 @@ class Login extends React.Component {
         }
         else {
             this.setState({loginStatus:3});
+            window.location = Config.homeUrl;
         }
     }
 
@@ -71,7 +76,10 @@ class Login extends React.Component {
     }
 
 
-    render() {  
+    render() {
+        if (AuthHandler.loggedIn()) {
+            return <Redirect to={Config.homeUrl} />;
+          }
 
         document.body.className="login-page";
 
