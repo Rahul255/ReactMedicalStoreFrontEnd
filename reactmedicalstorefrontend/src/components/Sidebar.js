@@ -12,6 +12,7 @@ class Sidebar extends React.Component {
     constructor(props) {
         super(props)
         this.divref = React.createRef();
+        this.divref2 = React.createRef();
     }
 
     componentWillMount(){
@@ -23,9 +24,11 @@ class Sidebar extends React.Component {
 
     handleMouseClick = (event) =>{
         console.log("ok")
-        if(event.target == this.divref.current){
+        if(event.target == this.divref.current || event.target == this.divref2.current){
+            console.log("Click Element");
             return;
         } else {
+            console.log("Click Outside");
             this.setState({defaultClass:"btn-group user-helper-dropdown"});
         }
     }
@@ -58,7 +61,10 @@ class Sidebar extends React.Component {
                                 >keyboard_arrow_down</i>
                                 <ul className="dropdown-menu pull-right">
                                     <li role="separator" className="divider"></li>
-                                    <li><a href="#" className=" waves-effect waves-block"><i className="material-icons">input</i>Sign Out</a></li>
+                                    <li>
+                                        <Link to={Config.logoutPageUrl} className=" waves-effect waves-block" ref={this.divref2}>
+                                            <i className="material-icons">input</i>Sign Out
+                                        </Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -78,7 +84,8 @@ class Sidebar extends React.Component {
                                 </li>
                                 )}
                         </ul>
-                        <div className="slimScrollBar" style={{background: "rgba(0, 0, 0, 0.5)", width: "4px", position: "absolute", top: "0px", opacity: "0.4", display: "block", borderRadius: "0px", zIndex: "99" ,right: "1px", height: "140.13px"}}></div><div className="slimScrollRail" style={{width: "4px", height: "100%", position: "absolute", top: "0px", display: "none", borderRadius: "0px", background: "rgb(51, 51, 51)", opacity: "0.2", zIndex: "90", right: "1px"}}></div></div>
+                        <div className="slimScrollBar" style={{background: "rgba(0, 0, 0, 0.5)", width: "4px", position: "absolute", top: "0px", opacity: "0.4", display: "block", borderRadius: "0px", zIndex: "99" ,right: "1px", height: "140.13px"}}></div>
+                        <div className="slimScrollRail" style={{width: "4px", height: "100%", position: "absolute", top: "0px", display: "none", borderRadius: "0px", background: "rgb(51, 51, 51)", opacity: "0.2", zIndex: "90", right: "1px"}}></div></div>
                     </div>
                     <div className="legal">
                         <div className="copyright">
