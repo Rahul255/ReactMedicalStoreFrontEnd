@@ -34,6 +34,20 @@ class MainComponent extends React.Component {
     componentWillUnmount(){
         window.removeEventListener("resize",this.onscreenresize)
     }
+    componentDidMount(){
+        var inputall = document.querySelectorAll("input");
+        inputall.forEach(input => {
+            input.addEventListener("focus",function (e) {
+                this.parentNode.className = "form-line focused";
+            });
+        });
+
+        inputall.forEach(input => {
+            input.addEventListener("blur",function (e) {
+                this.parentNode.className = "form-line";
+            });
+        });
+    }
     render() {
         if (this.state.width > 1150){
             document.getElementById("root").className = "theme-red";

@@ -1,7 +1,14 @@
 import React from 'react';
-import AuthHandler from "../utils/AuthHandler"
+import AuthHandler from "../utils/AuthHandler";
+import APIHandler from '..//utils/APIHandler';
 
 class CompanyComponent extends React.Component {
+
+    async formSubmit(event){
+        event.preventDefault();
+        var apiHandler = new APIHandler();
+        apiHandler.saveCompanyData();
+    }
 
     render() {
         return (
@@ -19,7 +26,7 @@ class CompanyComponent extends React.Component {
                                     </h2>
                                 </div>
                                 <div className="body">
-                                    <form>
+                                    <form onSubmit={this.formSubmit}>
                                         <label htmlFor="email_address">Name</label>
                                         <div className="form-group">
                                             <div className="form-line">
@@ -57,7 +64,7 @@ class CompanyComponent extends React.Component {
                                             </div>
                                         </div>
                                         <br/>
-                                        <button type="button" className="btn btn-primary m-t-15 waves-effect">Add Company</button>
+                                        <button type="submit" className="btn btn-primary m-t-15 waves-effect">Add Company</button>
                                     </form>
                                 </div>
                             </div>
