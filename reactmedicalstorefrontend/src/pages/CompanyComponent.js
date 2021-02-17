@@ -46,6 +46,10 @@ class CompanyComponent extends React.Component {
         console.log(companydata);
         this.setState({companyDataList: companydata.data.data});
     }
+    viewCompanyDetails = (company_id) => {
+        console.log(company_id);
+        console.log(this.props);
+    }
 
     render() {
         return (
@@ -158,9 +162,9 @@ class CompanyComponent extends React.Component {
                                                     <td>{company.contact}</td>
                                                     <td>{company.email}</td>
                                                     <td>{company.description}</td>
-                                                    <td>{company.added_on}</td>
+                                                    <td>{new Date(company.added_on).toLocaleString()}</td>
                                                     <td>
-                                                        <button className="btn btn-block btn-warning">View</button>
+                                                        <button className="btn btn-block btn-warning" onClick={()=>this.viewCompanyDetails(company_id)}>View</button>
                                                     </td>
                                                 </tr>
                                             ))}

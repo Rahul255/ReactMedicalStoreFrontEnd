@@ -49,6 +49,7 @@ class MainComponent extends React.Component {
         });
     }
     render() {
+        console.log(this.props);
         if (this.state.width > 1150){
             document.getElementById("root").className = "theme-red";
         }
