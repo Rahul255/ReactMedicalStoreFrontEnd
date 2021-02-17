@@ -6,17 +6,28 @@ const { default: Config } = require("./Config");
 
 
 class APIHandler {
+    //concent for check login
     async checkLogin() {
         if(AuthHandler.checkTokenExpiry()){
+            try{
             var response = await Axios.post(Config.refreshApiUrl, {
                 refresh: AuthHandler.getRefreshToken(),
             });
             
             reactLocalStorage.set("token",response.data.access);
         }
+        catch(error){
+            console.log(error);
+            //not using valid token for refresh
+            AuthHandler.logoutUser();
+            window.location = "/";
+        }
     }
+    }
+    //concent for save company data
     async saveCompanyData(name,licence_no,address,contact,email,description){
-        this.checkLogin();
+        await this.checkLogin();
+        //waite undil token get updated
 
         var response = await Axios.post(
             Config.companyApiUrl, 
@@ -31,6 +42,16 @@ class APIHandler {
             {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
 
             return response;
+            
+    }
+    //concent for fetch all companydata
+    async fetchAllCompany(){
+        await this.checkLogin();
+
+        var response =  await Axios.get(Config.companyApiUrl,
+            {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+        return response;    
     }
 }
 
