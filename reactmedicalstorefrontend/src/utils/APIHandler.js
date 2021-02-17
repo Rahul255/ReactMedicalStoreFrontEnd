@@ -1,19 +1,36 @@
-const {default: Axios} = require('axios');
-const {default: Config} = require('./Config');
-const {default: AuthHandler} = require('./AuthHandler');
+import { reactLocalStorage } from "reactjs-localstorage";
+
+const { default: AuthHandler } = require("./AuthHandler");
+const { default: Axios } = require("axios");
+const { default: Config } = require("./Config");    
 
 
 class APIHandler {
     async checkLogin() {
         if(AuthHandler.checkTokenExpiry()){
             var response = await Axios.post(Config.refreshApiUrl, {
-                refresh: AuthHandler.getrefreshToken(),
+                refresh: AuthHandler.getRefreshToken(),
             });
-            console.log(response);
+            
+            reactLocalStorage.set("token",response.data.access);
         }
     }
-    async saveCompanyData(name,license_no,address,contact,email,description){
+    async saveCompanyData(name,licence_no,address,contact,email,description){
         this.checkLogin();
+
+        var response = await Axios.post(
+            Config.companyApiUrl, 
+            {
+                name:name,
+                licence_no:licence_no,
+                address:address,
+                contact:contact,
+                email:email,
+                description:description
+            },
+            {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+            return response;
     }
 }
 

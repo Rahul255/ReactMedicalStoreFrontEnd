@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Config from "./Config";
-import {reactLocalStorage} from 'reactjs-localstorage';
+import { reactLocalStorage } from "reactjs-localstorage";
 
 
 class AuthHandler {
@@ -37,13 +37,13 @@ class AuthHandler {
         reactLocalStorage.remove("token");
         reactLocalStorage.remove("refresh");
     }
-    static checkTokenExpiry(){
+    static checkTokenExpiry() {
         var expire = false;
         var token = this.getLoginToken();
-        var tokenArray = token.splite(".");
-        var jwt=JSON.parse(atob(tokenArray[1]));
-        if(jwt && jwt.exp && Number.isFinite(jwt.exp)){
-            expire = jwt.exp*1000;
+        var tokenArray = token.split(".");
+        var jwt = JSON.parse(atob(tokenArray[1]));
+        if (jwt && jwt.exp && Number.isFinite(jwt.exp)) {
+          expire = jwt.exp * 1000;
         }
         else{
             expire = false;

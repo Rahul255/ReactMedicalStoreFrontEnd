@@ -4,10 +4,24 @@ import APIHandler from '..//utils/APIHandler';
 
 class CompanyComponent extends React.Component {
 
+    state = {
+        errorRes:false,
+        errorMessage:"",
+        btnMessage:0,
+    }
+
     async formSubmit(event){
         event.preventDefault();
         var apiHandler = new APIHandler();
-        apiHandler.saveCompanyData();
+        var response =await apiHandler.saveCompanyData(
+            event.target.name.value,
+            event.target.licence_no.value,
+            event.target.address.value,
+            event.target.contact.value,
+            event.target.email.value,
+            event.target.description.value
+            );
+        console.log(response);
     }
 
     render() {
@@ -33,10 +47,10 @@ class CompanyComponent extends React.Component {
                                                 <input type="text" id="name" name="name" className="form-control" placeholder="Enter Company Name"/>
                                             </div>
                                         </div>
-                                        <label htmlFor="email_address">License No</label>
+                                        <label htmlFor="email_address">Licence No</label>
                                         <div className="form-group">
                                             <div className="form-line">
-                                                <input type="text" id="license_no" name="license_no" className="form-control" placeholder="Enter License No"/>
+                                                <input type="text" id="licence_no" name="licence_no" className="form-control" placeholder="Enter Licence No"/>
                                             </div>
                                         </div>
                                         <label htmlFor="email_address">Address</label>
@@ -64,7 +78,25 @@ class CompanyComponent extends React.Component {
                                             </div>
                                         </div>
                                         <br/>
-                                        <button type="submit" className="btn btn-primary m-t-15 waves-effect">Add Company</button>
+                                        <button type="submit" 
+                                        className="btn btn-primary m-t-15 waves-effect"
+                                        disabled={this.state.btnMessage==0?false:true}
+                                        >
+                                            {this.state.btnMessage==0?"Add Company" : "Adding Company Please Waite.."}
+                                        </button>
+                                        <br/>
+                                        {this.state.errorRes==false && this.state.sendData==true?(
+                                            <div class="alert alert-success">
+                                                <strong>Success</strong> {this.state.errorMessage}.
+                                            </div>
+                                            ):""
+                                        }
+                                        {this.state.errorRes==true && this.state.sendData==true?(
+                                            <div class="alert alert-danger">
+                                                <strong>Failed!</strong> {this.state.errorMessage}.
+                                            </div>
+                                            ):""
+                                        }
                                     </form>
                                 </div>
                             </div>
