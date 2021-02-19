@@ -1,8 +1,8 @@
 import React from 'react';
 import AuthHandler from "../utils/AuthHandler";
-import APIHandler from '..//utils/APIHandler';
+import APIHandler from '../utils/APIHandler';
 
-class CompanyComponent extends React.Component {
+class CompanyDetailsComponent extends React.Component {
 
     constructor(props) {
         super(props)
@@ -49,7 +49,6 @@ class CompanyComponent extends React.Component {
     viewCompanyDetails = (company_id) => {
         console.log(company_id);
         console.log(this.props);
-        this.props.history.push("/companydetails/"+company_id);
     }
 
     render() {
@@ -182,4 +181,4 @@ class CompanyComponent extends React.Component {
     }
 }
 
-export default CompanyComponent;
+export default CompanyDetailsComponent;
