@@ -7,6 +7,7 @@ class CompanyDetailsComponent extends React.Component {
     constructor(props) {
         super(props)
         this.formSubmit = this.formSubmit.bind(this);
+        console.log(props.match.params.id);
     }
 
     state = {
@@ -14,7 +15,7 @@ class CompanyDetailsComponent extends React.Component {
         errorMessage:"",
         btnMessage:0,
         sendData:false,
-        companyDataList:[],
+        companyBank:[],
     }
 
     async formSubmit(event){
@@ -42,9 +43,10 @@ class CompanyDetailsComponent extends React.Component {
     }
     async fetchCompanyData(){
         var apiHandler = new APIHandler();
-        var companydata =await apiHandler.fetchAllCompany();
+        var companydata =await apiHandler.fetchCompanyDetails(this.props.match.params.id);
         console.log(companydata);
-        this.setState({companyDataList: companydata.data.data});
+        this.setState({ companyBank: companydata.data.data.company_bank });
+        //this.setState({companyDataList: companydata.data.data});
     }
     viewCompanyDetails = (company_id) => {
         console.log(company_id);
@@ -142,30 +144,21 @@ class CompanyDetailsComponent extends React.Component {
                                         <thead>
                                             <tr>
                                                 <th>#ID</th>
-                                                <th>Name</th>
-                                                <th>Licence No</th>
-                                                <th>Address</th>
-                                                <th>Contact</th>
-                                                <th>Email</th>
-                                                <th>Description</th>
+                                                <th>Account Number</th>
+                                                <th>IFSC Code</th>
                                                 <th>Added On</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {this.state.companyDataList.map((company) =>(
+                                        {this.state.companyBank.map((company) =>(
                                                 <tr key={company.id}>
                                                     <td>{company.id}</td>
-                                                    <td>{company.name}</td>
-                                                    <td>{company.licence_no}</td>
-                                                    <td>{company.address}</td>
-                                                    <td>{company.contact}</td>
-                                                    <td>{company.email}</td>
-                                                    <td>{company.description}</td>
+                                                    <td>{company.bank_account_no}</td>
+                                                    <td>{company.ifsc_no}</td>
                                                     <td>{new Date(company.added_on).toLocaleString()}</td>
                                                     <td>
-                                                        <button className="btn btn-block btn-warning" onClick={() =>
-                                                            this.viewCompanyDetails(company.id)}>View</button>
+                                                        <button className="btn btn-block btn-warning" >Delete</button>
                                                     </td>
                                                 </tr>
                                             ))}
