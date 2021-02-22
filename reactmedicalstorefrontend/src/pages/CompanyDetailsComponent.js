@@ -151,7 +151,7 @@ class CompanyDetailsComponent extends React.Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {this.state.companyBank.map((company) =>(
+                                            {this.state.companyBank.map((company) =>(
                                                 <tr key={company.id}>
                                                     <td>{company.id}</td>
                                                     <td>{company.bank_account_no}</td>
