@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import AuthHandler from "../utils/AuthHandler";
 import APIHandler from '../utils/APIHandler';
 
@@ -98,6 +99,9 @@ class CompanyAddBankComponent extends React.Component {
                                         {this.state.errorRes==false && this.state.sendData==true?(
                                             <div className="alert alert-success">
                                                 <strong>Success</strong> {this.state.errorMessage}.
+                                                <Link to={"/companydetails/" + this.props.match.params.id} className="btn btn-info">
+                                                    Back to Company Details
+                                                </Link>
                                             </div>
                                             ):""
                                         }

@@ -71,6 +71,10 @@ class CompanyDetailsComponent extends React.Component {
     AddCompanyBank=()=>{
         this.props.history.push("/addCompanyBank/" + this.props.match.params.id);
     }
+    EditCompanyBank = (company_bank_id) => {
+        console.log(company_bank_id);
+        this.props.history.push("/editcompanybank/" + this.props.match.params.id+"/"+company_bank_id);
+    }
 
     render() {
         return (
@@ -251,6 +255,14 @@ class CompanyDetailsComponent extends React.Component {
                                                     <td>{company.bank_account_no}</td>
                                                     <td>{company.ifsc_no}</td>
                                                     <td>{new Date(company.added_on).toLocaleString()}</td>
+                                                    <td>
+                                                        <button 
+                                                        className="btn btn-block btn-warning" 
+                                                        onClick={() =>this.EditCompanyBank(company.id)}
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                    </td>
                                                     <td>
                                                         <button className="btn btn-block btn-danger" >Delete</button>
                                                     </td>
