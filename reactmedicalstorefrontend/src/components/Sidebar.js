@@ -15,7 +15,7 @@ class Sidebar extends React.Component {
         this.divref2 = React.createRef();
     }
 
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
         document.addEventListener("mousedown",this.handleMouseClick,false)
     }
     componentWillUnmount(){

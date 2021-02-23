@@ -28,7 +28,7 @@ class MainComponent extends React.Component {
         console.log(window.screen.width);
         this.setState({width: window.screen.width})
     }
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
         window.addEventListener("resize",this.onscreenresize)
     }
     componentWillUnmount(){

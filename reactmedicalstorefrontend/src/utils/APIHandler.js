@@ -82,6 +82,25 @@ class APIHandler {
             return response;
             
     }
+
+    //concent for save company Bank data
+    async saveCompanyBankData(bank_account_no,ifsc_no,company_id){
+        await this.checkLogin();
+        //waite undil token get updated
+
+        var response = await Axios.post(
+            Config.companyBankApiUrl, 
+            {
+                bank_account_no:bank_account_no,
+                ifsc_no:ifsc_no,
+                company_id:company_id,
+                
+            },
+            {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+            return response;
+            
+    }
 }
 
 export default APIHandler;

@@ -22,6 +22,7 @@ class CompanyDetailsComponent extends React.Component {
         contact: "",
         email: "",
         description:"",
+        dataLoaded: false,
     }
 
     async formSubmit(event){
@@ -59,11 +60,16 @@ class CompanyDetailsComponent extends React.Component {
         this.setState({ contact: companydata.data.data.contact});
         this.setState({ email: companydata.data.data.email});
         this.setState({ description: companydata.data.data.description});
+        this.setState({ dataLoaded: true});
         //this.setState({companyDataList: companydata.data.data});
     }
     viewCompanyDetails = (company_id) => {
         console.log(company_id);
         console.log(this.props);
+    }
+
+    AddCompanyBank=()=>{
+        this.props.history.push("/addCompanyBank/" + this.props.match.params.id);
     }
 
     render() {
@@ -77,6 +83,19 @@ class CompanyDetailsComponent extends React.Component {
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div className="card">
                                 <div className="header">
+                                {this.state.dataLoaded == false?(
+                                    <div className="text-center">
+                                        <div class="preloader pl-size-xl">
+                                                    <div class="spinner-layer">
+                                                        <div class="circle-clipper left">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                        <div class="circle-clipper right">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    </div>):""}
                                     <h2>
                                         Edit Company
                                     </h2>
@@ -190,9 +209,29 @@ class CompanyDetailsComponent extends React.Component {
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div className="card">
                                 <div className="header">
+                                {this.state.dataLoaded == false?(
+                                    <div className="text-center">
+                                        <div class="preloader pl-size-xl">
+                                                    <div class="spinner-layer">
+                                                        <div class="circle-clipper left">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                        <div class="circle-clipper right">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    </div>):""}
                                     <h2>
                                         Company Bank
                                     </h2>
+                                    <div className="header-dropdown m-r--5">
+                                        <button className="btn btn-info"
+                                        onClick={this.AddCompanyBank}
+                                        >
+                                            Add Company
+                                        </button>
+                                    </div>
                                 </div>
                                 <div className="body table-responsive">
                                     <table className="table table-hover">
