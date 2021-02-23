@@ -62,6 +62,26 @@ class APIHandler {
 
         return response;    
     }
+//edit the company data
+    async editCompanyData(name,licence_no,address,contact,email,description,id){
+        await this.checkLogin();
+        //waite undil token get updated
+
+        var response = await Axios.put(
+            Config.companyApiUrl+""+id+"/", 
+            {
+                name:name,
+                licence_no:licence_no,
+                address:address,
+                contact:contact,
+                email:email,
+                description:description
+            },
+            {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+            return response;
+            
+    }
 }
 
 export default APIHandler;

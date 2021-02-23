@@ -16,6 +16,12 @@ class CompanyDetailsComponent extends React.Component {
         btnMessage:0,
         sendData:false,
         companyBank:[],
+        name: "",
+        licence_no: "",
+        address: "",
+        contact: "",
+        email: "",
+        description:"",
     }
 
     async formSubmit(event){
@@ -23,13 +29,14 @@ class CompanyDetailsComponent extends React.Component {
         this.setState({btnMessage:1})
         
         var apiHandler = new APIHandler();
-        var response =await apiHandler.saveCompanyData(
+        var response =await apiHandler.editCompanyData(
             event.target.name.value,
             event.target.licence_no.value,
             event.target.address.value,
             event.target.contact.value,
             event.target.email.value,
-            event.target.description.value
+            event.target.description.value,
+            this.props.match.params.id
             );
         console.log(response);
         this.setState({btnMessage:0})
@@ -46,6 +53,12 @@ class CompanyDetailsComponent extends React.Component {
         var companydata =await apiHandler.fetchCompanyDetails(this.props.match.params.id);
         console.log(companydata);
         this.setState({ companyBank: companydata.data.data.company_bank });
+        this.setState({ name: companydata.data.data.name});
+        this.setState({ licence_no: companydata.data.data.licence_no});
+        this.setState({ address: companydata.data.data.address});
+        this.setState({ contact: companydata.data.data.contact});
+        this.setState({ email: companydata.data.data.email});
+        this.setState({ description: companydata.data.data.description});
         //this.setState({companyDataList: companydata.data.data});
     }
     viewCompanyDetails = (company_id) => {
@@ -65,7 +78,7 @@ class CompanyDetailsComponent extends React.Component {
                             <div className="card">
                                 <div className="header">
                                     <h2>
-                                        Add Company
+                                        Edit Company
                                     </h2>
                                 </div>
                                 <div className="body">
@@ -73,37 +86,79 @@ class CompanyDetailsComponent extends React.Component {
                                         <label htmlFor="email_address">Name</label>
                                         <div className="form-group">
                                             <div className="form-line">
-                                                <input type="text" id="name" name="name" className="form-control" placeholder="Enter Company Name"/>
+                                                <input 
+                                                    type="text" 
+                                                    id="name" 
+                                                    name="name" 
+                                                    className="form-control" 
+                                                    placeholder="Enter Company Name"
+                                                    defaultValue = {this.state.name}
+                                                />
                                             </div>
                                         </div>
                                         <label htmlFor="email_address">Licence No</label>
                                         <div className="form-group">
                                             <div className="form-line">
-                                                <input type="text" id="licence_no" name="licence_no" className="form-control" placeholder="Enter Licence No"/>
+                                                <input 
+                                                    type="text" 
+                                                    id="licence_no" 
+                                                    name="licence_no" 
+                                                    className="form-control" 
+                                                    placeholder="Enter Licence No"
+                                                    defaultValue = {this.state.licence_no}
+                                                />
                                             </div>
                                         </div>
                                         <label htmlFor="email_address">Address</label>
                                         <div className="form-group">
                                             <div className="form-line">
-                                                <input type="text" id="address" name="address" className="form-control" placeholder="Enter Address"/>
+                                                <input 
+                                                    type="text" 
+                                                    id="address" 
+                                                    name="address" 
+                                                    className="form-control" 
+                                                    placeholder="Enter Address"
+                                                    defaultValue = {this.state.address}
+                                                />
                                             </div>
                                         </div>
                                         <label htmlFor="email_address">Contact</label>
                                         <div className="form-group">
                                             <div className="form-line">
-                                                <input type="text" id="contact" name="contact" className="form-control" placeholder="Enter Contact"/>
+                                                <input 
+                                                    type="text" 
+                                                    id="contact" 
+                                                    name="contact" 
+                                                    className="form-control" 
+                                                    placeholder="Enter Contact"
+                                                    defaultValue = {this.state.contact}
+                                                />
                                             </div>
                                         </div>
                                         <label htmlFor="email_address">Email</label>
                                         <div className="form-group">
                                             <div className="form-line">
-                                                <input type="text" id="email" name="email" className="form-control" placeholder="Enter Email"/>
+                                                <input 
+                                                    type="text" 
+                                                    id="email" 
+                                                    name="email" 
+                                                    className="form-control" 
+                                                    placeholder="Enter Email"
+                                                    defaultValue = {this.state.email}
+                                                />
                                             </div>
                                         </div>
                                         <label htmlFor="email_address">Description</label>
                                         <div className="form-group">
                                             <div className="form-line">
-                                                <input type="text" id="description" name="discription" className="form-control" placeholder="Enter Description"/>
+                                                <input 
+                                                    type="text" 
+                                                    id="description" 
+                                                    name="discription" 
+                                                    className="form-control" 
+                                                    placeholder="Enter Description"
+                                                    defaultValue = {this.state.description}
+                                                />
                                             </div>
                                         </div>
                                         <br/>
@@ -111,7 +166,7 @@ class CompanyDetailsComponent extends React.Component {
                                         className="btn btn-primary m-t-15 waves-effect"
                                         disabled={this.state.btnMessage==0?false:true}
                                         >
-                                            {this.state.btnMessage==0?"Add Company" : "Adding Company Please Waite.."}
+                                            {this.state.btnMessage==0?"Edit Company" : "Editing Company Please Waite.."}
                                         </button>
                                         <br/>
                                         {this.state.errorRes==false && this.state.sendData==true?(
@@ -136,7 +191,7 @@ class CompanyDetailsComponent extends React.Component {
                             <div className="card">
                                 <div className="header">
                                     <h2>
-                                        All Companies
+                                        Company Bank
                                     </h2>
                                 </div>
                                 <div className="body table-responsive">
@@ -158,7 +213,7 @@ class CompanyDetailsComponent extends React.Component {
                                                     <td>{company.ifsc_no}</td>
                                                     <td>{new Date(company.added_on).toLocaleString()}</td>
                                                     <td>
-                                                        <button className="btn btn-block btn-warning" >Delete</button>
+                                                        <button className="btn btn-block btn-danger" >Delete</button>
                                                     </td>
                                                 </tr>
                                             ))}
