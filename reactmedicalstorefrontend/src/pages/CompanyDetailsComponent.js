@@ -44,7 +44,7 @@ class CompanyDetailsComponent extends React.Component {
         this.setState({errorRes:response.data.error})
         this.setState({errorMessage:response.data.message})
         this.setState({sendData:true})
-    }
+    };
     //This method is work when our page is ready
     componentDidMount() {
         this.fetchCompanyData();
