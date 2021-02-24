@@ -12,6 +12,7 @@ class Config {
                 {"index":"0","title":"Home","url":"/home","icons":"home"},
                 {"index":"1","title":"Company","url":"/company","icons":"assessment"},
                 {"index":"2","title":"Add Medicine","url":"/addMedicine","icons":"assessment"},
+                {"index":"3","title":"Manage Medicine","url":"/manageMedicine","icons":"assessment"},
         ];
 }
 
