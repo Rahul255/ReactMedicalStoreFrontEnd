@@ -16,6 +16,7 @@ class MedicineAddComponent extends React.Component {
         btnMessage:0,
         sendData:false,
         companylist: [],    
+        medicinedetails: [{"salt_name":"","salt_qty":"","salt_qty_type":"","description":""}],
     }
 
     async formSubmit(event){
@@ -43,6 +44,26 @@ class MedicineAddComponent extends React.Component {
         var companydata = await apihandler.fetchCompanyOnly();
         this.setState({ companylist: companydata.data });
       }
+
+    RemoveItem = () => {
+        if (this.state.medicinedetails.length != 1){
+            this.state.medicinedetails.pop(this.state.medicinedetails.length - 1);
+        }
+        this.setState({});
+    }
+
+    handleInput = (event) => {
+        console.log(event.target.name);
+        console.log(event.target.value);
+        console.log(event.target.getAttribute("data-index"));
+
+    }
+
+    AddItem = ()  => {
+        var item = {"salt_name":"","salt_qty":"","salt_qty_type":"","description":""};
+        this.state.medicinedetails.push(item);
+        this.setState({});
+    }
 
     render() {
         return (
@@ -186,7 +207,7 @@ class MedicineAddComponent extends React.Component {
                                         <div className="form-group">
                                             <div className="form-line">
                                                 <input 
-                                                    type="text" 
+                                                    type="date" 
                                                     id="expire_date" 
                                                     name="expire_date" 
                                                     className="form-control" 
@@ -198,7 +219,7 @@ class MedicineAddComponent extends React.Component {
                                         <div className="form-group">
                                             <div className="form-line">
                                                 <input 
-                                                    type="text" 
+                                                    type="date" 
                                                     id="mfg_date" 
                                                     name="mfg_date" 
                                                     className="form-control" 
@@ -252,6 +273,87 @@ class MedicineAddComponent extends React.Component {
                                                 ))}
                                             </select>
                                         </div>
+                                        <div className="form-group">
+                                            <div className="col-lg-6">
+                                                <button 
+                                                    className="btn btn-block btn-success" 
+                                                    onClick={this.AddItem}
+                                                    type="button"
+                                                >
+                                                    Add Details
+                                                </button>
+                                            </div>
+                                            <div className="col-lg-6">
+                                                <button 
+                                                className="btn btn-block btn-danger" 
+                                                onClick={this.RemoveItem}
+                                                type="button"
+                                                >
+                                                    Remove Details
+                                                </button>
+                                            </div>
+                                        </div>
+                                        {this.state.medicinedetails.map(
+                                            (item,index) => (
+                                            <div className="form-group row">
+                                                <div className="col-lg-3">
+                                                    <label htmlFor="email_address">Salt Name</label>
+                                                    <div className="form-line">
+                                                    <input 
+                                                        type="text" 
+                                                        id="salt_name" 
+                                                        name="salt_name" 
+                                                        className="form-control" 
+                                                        placeholder="Enter Salt Name"
+                                                        onChange={this.handleInput}
+                                                        data-index={index}
+                                                    />
+                                                </div>
+                                             </div>
+                                             <div className="col-lg-3">
+                                                    <label htmlFor="email_address">Salt Qty</label>
+                                                    <div className="form-line">
+                                                    <input 
+                                                        type="text" 
+                                                        id="salt_qty" 
+                                                        name="salt_qty" 
+                                                        className="form-control" 
+                                                        placeholder="Enter Salt Qty"
+                                                        onChange={this.handleInput}
+                                                        data-index={index}
+                                                    />
+                                                </div>
+                                             </div>
+                                             <div className="col-lg-3">
+                                                    <label htmlFor="email_address">Salt Qty Type</label>
+                                                    <div className="form-line">
+                                                    <input 
+                                                        type="text" 
+                                                        id="salt_qty_type" 
+                                                        name="salt_qty_type" 
+                                                        className="form-control" 
+                                                        placeholder="Enter Salt Qty Type"
+                                                        onChange={this.handleInput}
+                                                        data-index={index}
+                                                    />
+                                                </div>
+                                             </div>
+                                             <div className="col-lg-3">
+                                                    <label htmlFor="email_address">Description</label>
+                                                    <div className="form-line">
+                                                    <input 
+                                                        type="text" 
+                                                        id="description" 
+                                                        name="description" 
+                                                        className="form-control" 
+                                                        placeholder="Enter Salt Name"
+                                                        onChange={this.handleInput}
+                                                        data-index={index}
+                                                    />
+                                                </div>
+                                             </div>
+                                            </div>
+                                        ))}
                                         <br/>
                                         <button type="submit" 
                                         className="btn btn-primary m-t-15 waves-effect"
