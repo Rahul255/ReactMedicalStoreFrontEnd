@@ -32,6 +32,7 @@ class MedicineManageComponent extends React.Component {
     description1: "",
     in_stock_total: "",
     qty_in_strip: "",
+    total_salt_list: 0,
   };
 
   async formSubmit(event) {
@@ -77,7 +78,7 @@ class MedicineManageComponent extends React.Component {
   }
 
   RemoveItems = () => {
-    if (this.state.medicinedetails.length != 1) {
+    if (this.state.medicinedetails.length != this.state.total_salt_list) {
       this.state.medicinedetails.pop(this.state.medicinedetails.length - 1);
     }
     this.setState({});
@@ -136,7 +137,8 @@ class MedicineManageComponent extends React.Component {
       qty_in_strip: this.state.medicineDataList[index].qty_in_strip,
     });
 
-    this.setState({medicinedetails: this.state.medicineDataList[index].medicine_details})
+    this.setState({total_salt_list: this.state.medicineDataList[index].medicine_details.length});
+    this.setState({medicinedetails: this.state.medicineDataList[index].medicine_details});
   };
 
   render() {

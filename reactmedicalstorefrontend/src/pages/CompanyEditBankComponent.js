@@ -103,7 +103,7 @@ class CompanyEditBankComponent extends React.Component {
                         : "Edit Company Bank Please Wait.."}
                     </button>
                     <br />
-                    {this.state.errorRes == false &&
+                    {this.state.errorRes == true &&
                     this.state.sendData == true ? (
                       <div className="alert alert-success">
                         <strong>Success!</strong> {this.state.errorMessage}.
@@ -120,7 +120,7 @@ class CompanyEditBankComponent extends React.Component {
                     ) : (
                       ""
                     )}
-                    {this.state.errorRes == true &&
+                    {this.state.errorRes == false &&
                     this.state.sendData == true ? (
                       <div className="alert alert-danger">
                         <strong>Failed!</strong>
