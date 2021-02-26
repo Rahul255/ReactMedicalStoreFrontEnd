@@ -289,6 +289,37 @@ async editCompanyData(
             return response;
             
     } 
+//fetch employee data
+    async fetchEmployee(){
+      await this.checkLogin();
+
+      var response =  await Axios.get(Config.EmployeeApiUrl,
+          {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+      return response;    
+  }
+//save employee data
+  async saveEmployeeData(
+    name,
+    joinig_date,
+    phone,
+    address){
+    await this.checkLogin();
+    //waite undil token get updated
+
+    var response = await Axios.post(
+        Config.EmployeeApiUrl, 
+        {
+          name:name,
+          joinig_date:joinig_date,
+          phone:phone,
+          address:address,
+        },
+        {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+        return response;
+        
+} 
     
 }
 
