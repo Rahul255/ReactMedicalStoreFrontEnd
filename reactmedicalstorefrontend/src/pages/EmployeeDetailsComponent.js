@@ -2,7 +2,7 @@ import React from 'react';
 import AuthHandler from "../utils/AuthHandler";
 import APIHandler from '../utils/APIHandler';
 
-class EmployeeComponent extends React.Component {
+class EmployeeDetailsComponent extends React.Component {
 
     constructor(props) {
         super(props)
@@ -53,10 +53,6 @@ class EmployeeComponent extends React.Component {
         console.log(company_id);
         console.log(this.props);
         this.props.history.push("/companydetails/"+company_id);
-    }
-
-    ShowEmpDetails = (eid) => {
-        console.log(eid);
     }
 
     render() {
@@ -213,11 +209,7 @@ class EmployeeComponent extends React.Component {
                                                     <td>{employee.phone}</td>
                                                     <td>{employee.address}</td>
                                                     <td>{new Date(employee.added_on).toLocaleString()}</td>
-                                                    <td>
-                                                        <button 
-                                                        className="btn btn-primary"
-                                                        onClick={() => this.ShowEmpDetails(employee.id)}
-                                                        >View</button></td>
+                                                    <td><button className="btn btn-primary">View</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -232,4 +224,4 @@ class EmployeeComponent extends React.Component {
     }
 }
 
-export default EmployeeComponent;
+export default EmployeeDetailsComponent;
