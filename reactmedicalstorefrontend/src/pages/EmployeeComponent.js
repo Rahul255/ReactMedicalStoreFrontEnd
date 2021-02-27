@@ -56,7 +56,7 @@ class EmployeeComponent extends React.Component {
     }
 
     ShowEmpDetails = (eid) => {
-        console.log(eid);
+        this.props.history.push("/employeedetails/" + eid);
     }
 
     render() {

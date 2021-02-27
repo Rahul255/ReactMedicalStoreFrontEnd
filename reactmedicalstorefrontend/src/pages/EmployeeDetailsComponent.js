@@ -7,6 +7,7 @@ class EmployeeDetailsComponent extends React.Component {
     constructor(props) {
         super(props)
         this.formSubmit = this.formSubmit.bind(this);
+        console.log(this.props.match.params.id);
     }
 
     state = {
@@ -38,9 +39,9 @@ class EmployeeDetailsComponent extends React.Component {
     }
     //This method is work when our page is ready
     componentDidMount() {
-        this.fetchEmployeeData();
+        this.fetchEmployeeDataByID();
     }
-    async fetchEmployeeData(){
+    async fetchEmployeeDataByID(){
         this.updateDataAgain();
     }
     async updateDataAgain(){
@@ -60,7 +61,7 @@ class EmployeeDetailsComponent extends React.Component {
             <section className="content">
                 <div className="container-fluid">
                     <div className="block-header">
-                        <h2>MANAGE EMPLOYEE</h2>
+                        <h2>EDIT EMPLOYEE #{this.props.match.params.id}</h2>
                     </div>
                     <div className="row clearfix">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -80,7 +81,7 @@ class EmployeeDetailsComponent extends React.Component {
                                                 </div>
                                     </div>):""}
                                     <h2>
-                                        Add Employee
+                                        Edit Employee
                                     </h2>
                                 </div>
                                 <div className="body">
@@ -146,7 +147,7 @@ class EmployeeDetailsComponent extends React.Component {
                                         className="btn btn-primary m-t-15 waves-effect"
                                         disabled={this.state.btnMessage==0?false:true}
                                         >
-                                            {this.state.btnMessage==0?"Add Employee" : "Adding Employee Please Waite.."}
+                                            {this.state.btnMessage==0?"Edit Employee" : "Editing Employee Please Waite.."}
                                         </button>
                                         <br/>
                                         {this.state.errorRes==false && this.state.sendData==true?(
