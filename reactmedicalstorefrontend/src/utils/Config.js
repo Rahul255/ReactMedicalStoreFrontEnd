@@ -8,6 +8,8 @@ class Config {
         static EmployeeApiUrl = "http://127.0.0.1:8000/api/employee/";
         static medicineApiUrl = "http://127.0.0.1:8000/api/medicine/";
         static employeeSalaryApiUrl = "http://127.0.0.1:8000/api/employee_all_salary/";
+        static employeeBankApiUrl = "http://127.0.0.1:8000/api/employee_all_bank/";
+        static employeeBankApiUrlByID = "http://127.0.0.1:8000/api/employee_bankby_id/";
         static employeeSalaryByIdApiUrl = "http://127.0.0.1:8000/api/employee_salaryby_id/";
         static homeUrl = "/home";
         static logoutPageUrl = "/logout";

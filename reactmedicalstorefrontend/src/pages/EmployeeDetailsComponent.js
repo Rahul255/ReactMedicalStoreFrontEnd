@@ -8,18 +8,23 @@ class EmployeeDetailsComponent extends React.Component {
         super(props)
         this.formSubmit = this.formSubmit.bind(this);
         this.formSubmitSalary = this.formSubmitSalary.bind(this);
+        this.formSubmitBank = this.formSubmitBank.bind(this);
         console.log(this.props.match.params.id);
     }
 
     state = {
         errorRes:false,
         errorResSalary:false,
+        errorResBank:false,
         errorMessage:"",
         errorMessageSalary:"",
+        errorMessageBank:"",
         btnMessage:0,
         btnMessageSalary:0,
+        btnMessageBank:0,
         sendData:false,
         sendDataSalary:false,
+        sendDataBank:false,
         employeeList:[],
         dataLoaded:false,
         name: "",
@@ -27,6 +32,7 @@ class EmployeeDetailsComponent extends React.Component {
         phone: "",
         address: "",
         employeeSalaryList:[],
+        employeebankList:[],
     }
 
     async formSubmit(event){
@@ -77,14 +83,20 @@ class EmployeeDetailsComponent extends React.Component {
 
     async updateDataAgain(){
         var apiHandler = new APIHandler();
+        //call API
         var employeeData =await apiHandler.fetchEmployeeByID(this.props.match.params.id);
         var employeeSalary = await apiHandler.fetchSalaryEmployee(this.props.match.params.id);
+        var employeeBank = await apiHandler.fetchBankEmployee(this.props.match.params.id);
+
+
+        
         console.log(employeeSalary);
         this.setState({name: employeeData.data.data.name});
         this.setState({joinig_date: employeeData.data.data.joinig_date});
         this.setState({phone: employeeData.data.data.phone});
         this.setState({address: employeeData.data.data.address});
         this.setState({employeeSalaryList: employeeSalary.data});
+        this.setState({employeebankList: employeeBank.data});
         //this.setState({employeeList: employeeDataList.data.data})
         this.setState({dataLoaded: true});
     }
@@ -94,8 +106,23 @@ class EmployeeDetailsComponent extends React.Component {
         this.props.history.push("/companydetails/"+company_id);
     }
 
-    async formSubmitBank () {
-        console.log("Add Bank");
+    async formSubmitBank (event) {
+        event.preventDefault();
+        this.setState({btnMessageBank:1})
+        
+        var apiHandler = new APIHandler();
+        var response =await apiHandler.addEmployeeBankData(
+            event.target.bank_account_no.value,
+            event.target.ifsc_no.value,
+            this.props.match.params.id
+            );
+        console.log(response);
+        this.setState({btnMessageBank:0})
+        this.setState({errorResBank:response.data.error})
+        this.setState({errorMessageBank:response.data.message})
+        this.setState({sendDataBank:true})
+        this.updateDataAgain();
+        console.log("Save employee salary")
     }
 
     render() {
@@ -369,29 +396,29 @@ class EmployeeDetailsComponent extends React.Component {
                                     <form onSubmit={this.formSubmitBank}>
                                         <div className="row">
                                         <div className="col-lg-6">
-                                        <label htmlFor="email_address">Salary Date</label>
+                                        <label htmlFor="email_address">Employee Account No.</label>
                                         <div className="form-group">
                                             <div className="form-line">
                                                 <input 
-                                                type="date" 
-                                                id="salary_date" 
-                                                name="salary_date" 
+                                                type="text" 
+                                                id="bank_account_no" 
+                                                name="bank_account_no" 
                                                 className="form-control" 
-                                                placeholder="Enter Salary Date"
+                                                placeholder="Enter Employee account no"
                                                 />
                                             </div>
                                         </div>
                                         </div>
                                         <div className="col-lg-6">
-                                        <label htmlFor="email_address"> Salary Amount</label>
+                                        <label htmlFor="email_address"> Employee IFSC Code</label>
                                         <div className="form-group">
                                             <div className="form-line">
                                                 <input 
                                                 type="text" 
-                                                id="salary_amount" 
-                                                name="salary_amount" 
+                                                id="ifsc_no" 
+                                                name="ifsc_no" 
                                                 className="form-control" 
-                                                placeholder="Enter Joining Amount"
+                                                placeholder="Enter Employee IFSC code"
                                                 />
                                             </div>
                                         </div>
@@ -400,24 +427,71 @@ class EmployeeDetailsComponent extends React.Component {
                                         <br/>
                                         <button type="submit" 
                                         className="btn btn-primary m-t-15 waves-effect"
-                                        disabled={this.state.btnMessageSalary==0?false:true}
+                                        disabled={this.state.btnMessageBank==0?false:true}
                                         >
-                                            {this.state.btnMessageSalary==0?"Add Employee Salary" : "Adding Employee Salary Please Waite.."}
+                                            {this.state.btnMessageBank==0?"Add Employee Bank" : "Adding Employee Bank Please Waite.."}
                                         </button>
                                         <br/>
-                                        {this.state.errorResSalary==false && this.state.sendDataSalary==true?(
+                                        {this.state.errorResBank==false && this.state.sendDataBank==true?(
                                             <div className="alert alert-success">
-                                                <strong>Success</strong> {this.state.errorMessageSalary}.
+                                                <strong>Success</strong> {this.state.errorMessageBank}.
                                             </div>
                                             ):""
                                         }
-                                        {this.state.errorResSalary==true && this.state.sendDataSalary==true?(
+                                        {this.state.errorResBank==true && this.state.sendDataBank==true?(
                                             <div className="alert alert-danger">
-                                                <strong>Failed!</strong> {this.state.errorMessageSalary}.
+                                                <strong>Failed!</strong> {this.state.errorMessageBank}.
                                             </div>
                                             ):""
                                         }
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row clearfix">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div className="card">
+                                <div className="header">
+                                    {this.state.dataLoaded == false?(
+                                    <div className="text-center">
+                                        <div className="preloader pl-size-xl">
+                                                    <div className="spinner-layer">
+                                                        <div className="circle-clipper left">
+                                                            <div className="circle"></div>
+                                                        </div>
+                                                        <div className="circle-clipper right">
+                                                            <div className="circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    </div>):""}
+                                    <h2>
+                                       Employee Bank
+                                    </h2>
+                                </div>
+                                <div className="body table-responsive">
+                                    <table className="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#ID</th>
+                                                <th>Employee Bank</th>
+                                                <th>Employee IFSC Code</th>
+                                                <th>Added On</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {this.state.employeebankList.map((bankdetails) =>(
+                                                <tr key={bankdetails.id}>
+                                                    <td>{bankdetails.id}</td>
+                                                    <td>{bankdetails.bank_account_no}</td>
+                                                    <td>{bankdetails.ifsc_no}</td>
+                                                    <td>{new Date(bankdetails.added_on).toLocaleString()}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

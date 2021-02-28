@@ -378,6 +378,35 @@ async addEmployeeSalaryData(
       return response;
       
 } 
+
+//Add employee Bank data
+async addEmployeeBankData(
+  bank_account_no,
+  ifsc_no,employee_id){
+  await this.checkLogin();
+  //waite undil token get updated
+
+  var response = await Axios.post(
+      Config.employeeBankApiUrl, 
+      {
+        bank_account_no:bank_account_no,
+        ifsc_no:ifsc_no,
+        employee_id:employee_id,
+      },
+      {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+      return response;
+      
+} 
+//fetch employee bank data
+async fetchBankEmployee(id){
+  await this.checkLogin();
+
+  var response =  await Axios.get(Config.employeeBankApiUrlByID + "" + id ,
+      {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+  return response;    
+}
     
 }
 
