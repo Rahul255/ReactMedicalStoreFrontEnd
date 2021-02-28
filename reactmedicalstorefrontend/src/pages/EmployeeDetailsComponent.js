@@ -17,6 +17,11 @@ class EmployeeDetailsComponent extends React.Component {
         sendData:false,
         employeeList:[],
         dataLoaded:false,
+        name: "",
+        joinig_date: "",
+        phone: "",
+        address: "",
+        employeeSalaryList:[],
     }
 
     async formSubmit(event){
@@ -24,11 +29,12 @@ class EmployeeDetailsComponent extends React.Component {
         this.setState({btnMessage:1})
         
         var apiHandler = new APIHandler();
-        var response =await apiHandler.saveEmployeeData(
+        var response =await apiHandler.editEmployeeData(
             event.target.name.value,
             event.target.joinig_date.value,
             event.target.phone.value,
             event.target.address.value,
+            this.props.match.params.id
             );
         console.log(response);
         this.setState({btnMessage:0})
@@ -46,9 +52,13 @@ class EmployeeDetailsComponent extends React.Component {
     }
     async updateDataAgain(){
         var apiHandler = new APIHandler();
-        var employeeDataList =await apiHandler.fetchEmployee();
-        this.setState({employeeList: employeeDataList.data.data})
-        this.setState({dataLoaded: true});
+        var employeeData =await apiHandler.fetchEmployeeByID(this.props.match.params.id);
+        this.setState({name: employeeData.data.data.name});
+        this.setState({joinig_date: employeeData.data.data.joinig_date});
+        this.setState({phone: employeeData.data.data.phone});
+        this.setState({address: employeeData.data.data.address});
+        //this.setState({employeeList: employeeDataList.data.data})
+        //this.setState({dataLoaded: true});
     }
     viewCompanyDetails = (company_id) => {
         console.log(company_id);
@@ -96,7 +106,9 @@ class EmployeeDetailsComponent extends React.Component {
                                                 id="name" 
                                                 name="name" 
                                                 className="form-control" 
-                                                placeholder="Enter Name"/>
+                                                placeholder="Enter Name"
+                                                defaultValue = {this.state.name}
+                                                />
                                             </div>
                                         </div>
                                         </div>
@@ -109,7 +121,9 @@ class EmployeeDetailsComponent extends React.Component {
                                                 id="joinig_date" 
                                                 name="joinig_date" 
                                                 className="form-control" 
-                                                placeholder="Enter Joining date"/>
+                                                placeholder="Enter Joining date"
+                                                defaultValue = {this.state.joinig_date}
+                                                />
                                             </div>
                                         </div>
                                         </div>
@@ -124,7 +138,9 @@ class EmployeeDetailsComponent extends React.Component {
                                                 id="phone" 
                                                 name="phone" 
                                                 className="form-control" 
-                                                placeholder="Enter Phone"/>
+                                                placeholder="Enter Phone"
+                                                defaultValue = {this.state.phone}
+                                                />
                                             </div>
                                         </div>
                                         </div>
@@ -137,7 +153,9 @@ class EmployeeDetailsComponent extends React.Component {
                                                 id="address" 
                                                 name="address" 
                                                 className="form-control" 
-                                                placeholder="Enter Address"/>
+                                                placeholder="Enter Address"
+                                                defaultValue = {this.state.address}
+                                                />
                                             </div>
                                         </div>
                                         </div>
@@ -185,7 +203,7 @@ class EmployeeDetailsComponent extends React.Component {
                                                 </div>
                                     </div>):""}
                                     <h2>
-                                        All Employee Data
+                                        All Employee Salary
                                     </h2>
                                 </div>
                                 <div className="body table-responsive">
@@ -193,23 +211,19 @@ class EmployeeDetailsComponent extends React.Component {
                                         <thead>
                                             <tr>
                                                 <th>#ID</th>
-                                                <th>Name</th>
-                                                <th>Joining Date</th>
-                                                <th>Phone</th>
-                                                <th>Address</th>
+                                                <th>Salary Date</th>
+                                                <th>Salary Amount</th>
                                                 <th>Added On</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {this.state.employeeList.map((employee) =>(
-                                                <tr key={employee.id}>
-                                                    <td>{employee.id}</td>
-                                                    <td>{employee.name}</td>
-                                                    <td>{employee.joinig_date}</td>
-                                                    <td>{employee.phone}</td>
-                                                    <td>{employee.address}</td>
-                                                    <td>{new Date(employee.added_on).toLocaleString()}</td>
+                                            {this.state.employeeSalaryList.map((salary) =>(
+                                                <tr key={salary.id}>
+                                                    <td>{salary.id}</td>
+                                                    <td>{salary.salary_date}</td>
+                                                    <td>{salary.salary_amount}</td>
+                                                    <td>{new Date(salary.added_on).toLocaleString()}</td>
                                                     <td><button className="btn btn-primary">View</button></td>
                                                 </tr>
                                             ))}

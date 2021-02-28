@@ -320,6 +320,35 @@ async editCompanyData(
         return response;
         
 } 
+
+//fetch employee data
+async fetchEmployeeByID(id){
+  await this.checkLogin();
+
+  var response =  await Axios.get(Config.EmployeeApiUrl + "" + id + "/",
+      {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+  return response;    
+}
+
+//edit the employee data
+async editEmployeeData(name, joinig_date, phone, address,id) {
+  await this.checkLogin();
+  //Wait Until Token Get Updated
+
+  var response = await Axios.put(
+    Config.EmployeeApiUrl + "" + id + "/",
+    {
+      name: name,
+      joinig_date: joinig_date,
+      phone: phone,
+      address:address,
+    },
+    { headers: { Authorization: "Bearer " + AuthHandler.getLoginToken() } }
+  );
+
+  return response;
+}
     
 }
 
