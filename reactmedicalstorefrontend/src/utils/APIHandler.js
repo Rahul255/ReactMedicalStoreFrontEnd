@@ -349,6 +349,35 @@ async editEmployeeData(name, joinig_date, phone, address,id) {
 
   return response;
 }
+//fetch employee salary data
+async fetchSalaryEmployee(id){
+  await this.checkLogin();
+
+  var response =  await Axios.get(Config.employeeSalaryByIdApiUrl + "" + id ,
+      {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+  return response;    
+}
+
+//Add employee salary data
+async addEmployeeSalaryData(
+  salary_date,
+  salary_amount,employee_id){
+  await this.checkLogin();
+  //waite undil token get updated
+
+  var response = await Axios.post(
+      Config.employeeSalaryApiUrl, 
+      {
+        salary_date:salary_date,
+        salary_amount:salary_amount,
+        employee_id:employee_id,
+      },
+      {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+      return response;
+      
+} 
     
 }
 
