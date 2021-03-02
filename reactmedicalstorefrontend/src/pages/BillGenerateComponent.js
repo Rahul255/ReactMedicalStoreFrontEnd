@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import AuthHandler from "../utils/AuthHandler";
 import APIHandler from '../utils/APIHandler';
+import AutoCompleteMedicine from '../components/AutoCompleteMedicine';
 
 class BillGenerateComponent extends React.Component {
 
@@ -123,20 +124,6 @@ class BillGenerateComponent extends React.Component {
                                             </div>
                                         </div>
                                         </div>
-                                        <div className="col-lg-6">
-                                        <label htmlFor="email_address">Bill ID</label>
-                                        <div className="form-group">
-                                            <div className="form-line">
-                                                <input 
-                                                    type="text" 
-                                                    id="bill_id" 
-                                                    name="bill_id" 
-                                                    className="form-control" 
-                                                    placeholder="Enter Bill ID"
-                                                />
-                                            </div>
-                                        </div>
-                                        </div>
                                         </div>
                                         <br/>
 
@@ -153,6 +140,7 @@ class BillGenerateComponent extends React.Component {
                                                     name="sr_no" 
                                                     className="form-control" 
                                                     placeholder="Enter SR No."
+                                                    defaultValue={index+1}
                                                 />
                                             </div>
                                         </div>
@@ -161,13 +149,7 @@ class BillGenerateComponent extends React.Component {
                                         <label htmlFor="email_address">Medicine Name</label>
                                         <div className="form-group">
                                             <div className="form-line">
-                                                <input 
-                                                    type="text" 
-                                                    id="medicine_name" 
-                                                    name="medicine_name" 
-                                                    className="form-control" 
-                                                    placeholder="Enter Medicine Name"
-                                                />
+                                                <AutoCompleteMedicine/>
                                             </div>
                                         </div>
                                         </div>
