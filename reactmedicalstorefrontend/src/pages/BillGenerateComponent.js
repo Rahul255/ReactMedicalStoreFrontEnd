@@ -15,6 +15,7 @@ class BillGenerateComponent extends React.Component {
         errorMessage:"",
         btnMessage:0,
         sendData:false,
+        medicineDetails:[{sr_no:"",medicine_name:"",qty:"",qty_type:"",unit_price:"",amount:"",}],
     }
 
     async formSubmit(event){
@@ -32,6 +33,19 @@ class BillGenerateComponent extends React.Component {
         this.setState({errorRes:response.data.error})
         this.setState({errorMessage:response.data.message})
         this.setState({sendData:true})
+    }
+    AddMedicineDetails = () => {
+        this.state.medicineDetails.push(
+            {sr_no:"",medicine_name:"",qty:"",qty_type:"",unit_price:"",amount:"",}
+        );
+        this.setState({});
+    }
+
+    RemoveMedicineDetails = () => {
+        if(this.state.medicineDetails.length > 1) {
+            this.state.medicineDetails.pop();
+            this.setState({});
+        }
     }
 
     render() {
@@ -125,7 +139,9 @@ class BillGenerateComponent extends React.Component {
                                         </div>
                                         </div>
                                         <br/>
+
                                         <h4>Medicine Details</h4>
+                                        {this.state.medicineDetails.map((item,index)=>(
                                         <div className="row">
                                         <div className="col-lg-2">
                                         <label htmlFor="email_address">SR No.</label>
@@ -211,6 +227,21 @@ class BillGenerateComponent extends React.Component {
                                             </div>
                                         </div>
                                         </div>
+                                        </div>
+                                        ))}
+                                        <div className="row">
+                                            <div className="col-lg-6">
+                                                <button 
+                                                onClick={this.AddMedicineDetails}  
+                                                type="button"
+                                                className="btn btn-block btn-success">ADD MEDICINE DETAILS</button>
+                                            </div>
+                                            <div className="col-lg-6">
+                                                <button 
+                                                onClick={this.RemoveMedicineDetails}
+                                                type="button"
+                                                className="btn btn-block btn-warning">REMOVE MEDICINE DETAILS</button>
+                                            </div>
                                         </div>
                                         <button type="submit" 
                                         className="btn btn-primary m-t-15 waves-effect"
