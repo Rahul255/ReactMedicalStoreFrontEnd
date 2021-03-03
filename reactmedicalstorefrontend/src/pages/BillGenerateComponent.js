@@ -48,6 +48,22 @@ class BillGenerateComponent extends React.Component {
             this.setState({});
         }
     }
+    showDataInInputs = (index,item) =>{
+        console.log(index);
+        console.log(item);
+        this.state.medicineDetails[index].qty=1;
+        this.state.medicineDetails[index].qty_type="pice";
+        this.state.medicineDetails[index].unit_price=item.sell_price;
+        this.state.medicineDetails[index].amount=item.sell_price;
+        this.setState({});
+    }
+    qtyChangeUpdate = (event) => {
+        var value = event.target.value;
+        var index = event.target.dataset.index;
+
+        this.state.medicineDetails[index].amount=this.state.medicineDetails[index].unit_price*value;
+        this.setState({});
+    }
 
     render() {
         return (
@@ -129,7 +145,7 @@ class BillGenerateComponent extends React.Component {
 
                                         <h4>Medicine Details</h4>
                                         {this.state.medicineDetails.map((item,index)=>(
-                                        <div className="row">
+                                        <div className="row" key={index}>
                                         <div className="col-lg-2">
                                         <label htmlFor="email_address">SR No.</label>
                                         <div className="form-group">
@@ -149,7 +165,10 @@ class BillGenerateComponent extends React.Component {
                                         <label htmlFor="email_address">Medicine Name</label>
                                         <div className="form-group">
                                             <div className="form-line">
-                                                <AutoCompleteMedicine/>
+                                                <AutoCompleteMedicine 
+                                                itemPosition={index} 
+                                                showDataInInputs={this.showDataInInputs}
+                                                />
                                             </div>
                                         </div>
                                         </div>
@@ -163,6 +182,9 @@ class BillGenerateComponent extends React.Component {
                                                     name="qty" 
                                                     className="form-control" 
                                                     placeholder="Enter Qty"
+                                                    defaultValue = {item.qty}
+                                                    data-index={index}
+                                                    onChange = {this.qtyChangeUpdate}
                                                 />
                                             </div>
                                         </div>
@@ -177,6 +199,7 @@ class BillGenerateComponent extends React.Component {
                                                     name="qty_type" 
                                                     className="form-control" 
                                                     placeholder="Enter Qty"
+                                                    defaultValue = {item.qty_type}
                                                 />
                                             </div>
                                         </div>
@@ -191,6 +214,7 @@ class BillGenerateComponent extends React.Component {
                                                     name="unit_price" 
                                                     className="form-control" 
                                                     placeholder="Enter Unit Price"
+                                                    defaultValue = {item.unit_price}
                                                 />
                                             </div>
                                         </div>
@@ -205,6 +229,7 @@ class BillGenerateComponent extends React.Component {
                                                     name="amount" 
                                                     className="form-control" 
                                                     placeholder="Enter Amount"
+                                                    defaultValue = {item.amount}
                                                 />
                                             </div>
                                         </div>
