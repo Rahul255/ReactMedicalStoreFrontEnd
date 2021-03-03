@@ -16,7 +16,7 @@ class BillGenerateComponent extends React.Component {
         errorMessage:"",
         btnMessage:0,
         sendData:false,
-        medicineDetails:[{sr_no:"",medicine_name:"",qty:"",qty_type:"",unit_price:"",amount:"",}],
+        medicineDetails:[{sr_no:"",medicine_name:"",qty:"",qty_type:"",unit_price:"",c_gst:"",s_gst:"",amount:"",}],
     }
 
     async formSubmit(event){
@@ -37,7 +37,7 @@ class BillGenerateComponent extends React.Component {
     }
     AddMedicineDetails = () => {
         this.state.medicineDetails.push(
-            {sr_no:"",medicine_name:"",qty:"",qty_type:"",unit_price:"",amount:"",}
+            {sr_no:"",medicine_name:"",qty:"",qty_type:"",unit_price:"",c_gst:"",s_gst:"",amount:"",}
         );
         this.setState({});
     }
@@ -54,14 +54,17 @@ class BillGenerateComponent extends React.Component {
         this.state.medicineDetails[index].qty=1;
         this.state.medicineDetails[index].qty_type="pice";
         this.state.medicineDetails[index].unit_price=item.sell_price;
-        this.state.medicineDetails[index].amount=item.sell_price;
+        this.state.medicineDetails[index].c_gst=item.c_gst;
+        this.state.medicineDetails[index].s_gst=item.s_gst;
+        this.state.medicineDetails[index].medicine_name=item.name;
+        this.state.medicineDetails[index].amount = parseInt(item.sell_price)+parseInt(item.c_gst)+parseInt(item.s_gst);
         this.setState({});
     }
     qtyChangeUpdate = (event) => {
         var value = event.target.value;
         var index = event.target.dataset.index;
 
-        this.state.medicineDetails[index].amount=this.state.medicineDetails[index].unit_price*value;
+        this.state.medicineDetails[index].amount=(parseInt(this.state.medicineDetails[index].unit_price)+parseInt(this.state.medicineDetails[index].c_gst)+parseInt(this.state.medicineDetails[index].s_gst))*value;
         this.setState({});
     }
 
