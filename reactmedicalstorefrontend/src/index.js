@@ -18,6 +18,7 @@ import LogoutComponent from './pages/LogoutComponent';
 import Config from './utils/Config';
 import CompanyAccountComponent from './pages/CompanyAccountComponent';
 import BillGenerateComponent from './pages/BillGenerateComponent';
+import CustomerRequestComponent from './pages/CustomerRequestComponent';
 
 
 ReactDOM.render(
@@ -36,6 +37,7 @@ ReactDOM.render(
             <PrivateRouteNew exact path="/employeeManage" activepage="5" page={EmployeeComponent}></PrivateRouteNew>
             <PrivateRouteNew exact path="/employeedetails/:id" activepage="5" page={EmployeeDetailsComponent}></PrivateRouteNew>
             <PrivateRouteNew exact path="/generateBill" activepage="6" page={BillGenerateComponent}></PrivateRouteNew>
+            <PrivateRouteNew exact path="/customerRequest" activepage="7" page={CustomerRequestComponent}></PrivateRouteNew>
         </Switch>
     </Router>
     , document.getElementById("root"))

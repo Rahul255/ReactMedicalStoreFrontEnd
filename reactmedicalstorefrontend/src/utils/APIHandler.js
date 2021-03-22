@@ -54,6 +54,15 @@ class APIHandler {
         return response;    
     }
 
+    async fetchAllCustomerRequest(){
+      await this.checkLogin();
+
+      var response =  await Axios.get(Config.customerRequestApiUrl,
+          {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+      return response;    
+  }
+
     async fetchCompanyDetails(id){
         await this.checkLogin();
 
@@ -123,6 +132,41 @@ async editCompanyData(
             return response;
             
     }
+
+//concent for save customer request data
+async saveCustomerRequestData(name,phone,medicine_details){
+  await this.checkLogin();
+  //waite undil token get updated
+
+  var response = await Axios.post(
+      Config.customerRequestApiUrl, 
+      {
+        customer_name:name,
+        phone:phone,
+        medicine_details:medicine_details,
+          
+      },
+      {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+      return response;
+      
+}
+//updateCustomerRequest
+
+async updateCustomerRequest(customer_id,name,phone,medicine_details){
+  var response = await Axios.put(
+    Config.customerRequestApiUrl+""+customer_id+"/", 
+    {
+      customer_name:name,
+      phone:phone,
+      medicine_details:medicine_details,
+      status:1,
+        
+    },
+    {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+    return response;
+}
 //Edit company bank detaisl
     async fetchCompanyBankDetails(id){
         await this.checkLogin();
