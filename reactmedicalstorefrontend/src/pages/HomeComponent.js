@@ -4,6 +4,17 @@ import APIHandler from '../utils/APIHandler';
 class HomeComponent extends React.Component {
     state={
         customer_request:0,
+        bill_count:0,
+        medicine_count:0,
+        company_count:0,
+        employee_count:0,
+        profit_total:0,
+        sell_total:0,
+        request_pending:0,
+        request_completed:0,
+        profit_amt_today:0,
+        sell_amt_today:0,
+        medicine_expire_serializer_data:0,
     }
     //This method is work when our page is ready
     componentDidMount() {
@@ -14,8 +25,18 @@ class HomeComponent extends React.Component {
         var homedata =await apiHandler.fetchHomePage();
         console.log(homedata);
         this.setState({customer_request: homedata.data.customer_request});
-        //this.setState({companyDataList: companydata.data.data});
-        //this.setState({dataLoaded: true});
+        this.setState({bill_count: homedata.data.bill_count});
+        this.setState({medicine_count:homedata.data.medicine_count});
+        this.setState({company_count: homedata.data.company_count});
+        this.setState({employee_count: homedata.data.employee_count});
+        this.setState({profit_total: homedata.data.profit_total});
+        this.setState({sell_total: homedata.data.sell_total});
+        this.setState({request_pending: homedata.data.request_pending});
+        this.setState({request_completed: homedata.data.request_completed});
+        this.setState({profit_amt_today: homedata.data.profit_amt_today});
+        this.setState({sell_amt_today: homedata.data.sell_amt_today});
+        this.setState({medicine_expire_serializer_data: homedata.data.medicine_expire_serializer_data});
+        
     }
     render() {
         return (
@@ -43,7 +64,12 @@ class HomeComponent extends React.Component {
                                 </div>
                                 <div className="content">
                                     <div className="text">TOTAL SALES</div>
-                                    <div className="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20">257</div>
+                                    <div 
+                                    className="number count-to" 
+                                    data-from="0" 
+                                    data-to="257" 
+                                    data-speed="1000" 
+                                    data-fresh-interval="20">{this.state.bill_count}</div>
                                 </div>
                             </div>
                         </div>
@@ -51,10 +77,15 @@ class HomeComponent extends React.Component {
                             <div className="info-box bg-light-green hover-expand-effect">
                                 <div className="icon">
                                     <i className="material-icons">forum</i>
-                                </div>
+                                    request_completed         </div>
                                 <div className="content">
                                     <div className="text">TOTAL MEDICINE</div>
-                                    <div className="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20">243</div>
+                                    <div 
+                                    className="number count-to" 
+                                    data-from="0" 
+                                    data-to="243" 
+                                    data-speed="1000" 
+                                    data-fresh-interval="20">{this.state.medicine_count}</div>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +96,12 @@ class HomeComponent extends React.Component {
                                 </div>
                                 <div className="content">
                                     <div className="text">TOTAL COMPANY</div>
-                                    <div className="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">1225</div>
+                                    <div 
+                                    className="number count-to" 
+                                    data-from="0" 
+                                    data-to="1225" 
+                                    data-speed="1000" 
+                                    data-fresh-interval="20">{this.state.company_count}</div>
                                 </div>
                             </div>
                         </div>
@@ -78,7 +114,12 @@ class HomeComponent extends React.Component {
                                 </div>
                                 <div className="content">
                                     <div className="text">TOTAL EMPLOYEE</div>
-                                    <div className="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">125</div>
+                                    <div 
+                                    className="number count-to" 
+                                    data-from="0" 
+                                    data-to="125" 
+                                    data-speed="15" 
+                                    data-fresh-interval="20">{this.state.employee_count}</div>
                                 </div>
                             </div>
                         </div>
@@ -89,7 +130,12 @@ class HomeComponent extends React.Component {
                                 </div>
                                 <div className="content">
                                     <div className="text">TOTAL PROFIT</div>
-                                    <div className="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20">257</div>
+                                    <div 
+                                    className="number count-to" 
+                                    data-from="0" 
+                                    data-to="257" 
+                                    data-speed="1000" 
+                                    data-fresh-interval="20">{this.state.profit_total}</div>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +146,12 @@ class HomeComponent extends React.Component {
                                 </div>
                                 <div className="content">
                                     <div className="text">TOTAL SALES AMOUNT</div>
-                                    <div className="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20">243</div>
+                                    <div 
+                                    className="number count-to" 
+                                    data-from="0" 
+                                    data-to="243" 
+                                    data-speed="1000" 
+                                    data-fresh-interval="20">{this.state.sell_total}</div>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +162,12 @@ class HomeComponent extends React.Component {
                                 </div>
                                 <div className="content">
                                     <div className="text">MEDICINE EXPIRE IN WEEK </div>
-                                    <div className="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">1225</div>
+                                    <div 
+                                    className="number count-to" 
+                                    data-from="0" 
+                                    data-to="1225" 
+                                    data-speed="1000" 
+                                    data-fresh-interval="20">{this.state.medicine_expire_serializer_data}</div>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +180,12 @@ class HomeComponent extends React.Component {
                                 </div>
                                 <div className="content">
                                     <div className="text">COMPLETED REQUEST</div>
-                                    <div className="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">125</div>
+                                    <div 
+                                    className="number count-to" 
+                                    data-from="0" 
+                                    data-to="125" 
+                                    data-speed="15" 
+                                    data-fresh-interval="20">{this.state.request_completed}</div>
                                 </div>
                             </div>
                         </div>
@@ -135,7 +196,12 @@ class HomeComponent extends React.Component {
                                 </div>
                                 <div className="content">
                                     <div className="text">PENDING REQUEST</div>
-                                    <div className="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20">257</div>
+                                    <div 
+                                    className="number count-to" 
+                                    data-from="0" 
+                                    data-to="257" 
+                                    data-speed="1000" 
+                                    data-fresh-interval="20">{this.state.request_pending}</div>
                                 </div>
                             </div>
                         </div>
@@ -146,7 +212,12 @@ class HomeComponent extends React.Component {
                                 </div>
                                 <div className="content">
                                     <div className="text">TODAY SALES AMOUNT</div>
-                                    <div className="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20">243</div>
+                                    <div 
+                                    className="number count-to" 
+                                    data-from="0" 
+                                    data-to="243" 
+                                    data-speed="1000" 
+                                    data-fresh-interval="20">{this.state.sell_amt_today}</div>
                                 </div>
                             </div>
                         </div>
@@ -157,7 +228,12 @@ class HomeComponent extends React.Component {
                                 </div>
                                 <div className="content">
                                     <div className="text">TODAY SALES PROFIT</div>
-                                    <div className="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">1225</div>
+                                    <div 
+                                    className="number count-to" 
+                                    data-from="0" 
+                                    data-to="1225" 
+                                    data-speed="1000" 
+                                    data-fresh-interval="20">{this.state.profit_amt_today}</div>
                                 </div>
                             </div>
                         </div>
