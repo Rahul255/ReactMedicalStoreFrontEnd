@@ -323,6 +323,16 @@ async updateCustomerRequest(customer_id,name,phone,medicine_details){
 
         return response;    
     }
+
+    async fetchHomePage(){
+      await this.checkLogin();
+
+      var response =  await Axios.get(Config.homeApiUrl,
+          {headers:{Authorization: "Bearer "+ AuthHandler.getLoginToken()}});
+
+      return response;    
+  }
+
     async saveCompanyTransactionData(
         company_id,
         transaction_type,
